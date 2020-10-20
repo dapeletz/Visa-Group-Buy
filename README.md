@@ -4,3 +4,4 @@ Our team was able to integrate the plaid API to determine how much available cre
 
 An example of the output that's printed in the command line can be found below: 
 
+![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
