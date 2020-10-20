@@ -1,4 +1,4 @@
-# Visa GroupBuy
+# Visa Group Buy
 
 Our team was able to integrate the plaid API to determine how much available credit a user has left. We used Python to integrate their quickstart guide and then wrote code to determine a user's available credit. After entering their bank account details, if the user has a credit card account, their available credit will be printed in the command line. 
 
