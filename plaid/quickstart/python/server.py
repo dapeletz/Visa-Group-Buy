@@ -236,6 +236,9 @@ def get_accounts():
         accounts_response = client.Accounts.get(access_token)
     except plaid.errors.PlaidError as e:
         return jsonify({'error': {'display_message': e.display_message, 'error_code': e.code, 'error_type': e.type}})
+    accounts_filtered = [account for account in accounts_response["accounts"] if account["type"] == "credit"]
+    accounts_response["accounts"] = accounts_filtered
+    """
     print("\n")
     for account in accounts_response["accounts"]:
         if account.get("type", -1) == "credit":
@@ -248,7 +251,8 @@ def get_accounts():
                     "Available Balance: ${}, Current Balance: ${}, Credit Limit: ${}".format(available, current, limit))
                 print("The available credit is: ${}".format(limit - current))
     print("-----")
-    print("\n")
+    print("\n", flush=True)
+    """
     pretty_print_response(accounts_response)
     return jsonify(accounts_response)
 

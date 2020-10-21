@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Plaid Quickstart Example</title>
+<title>Visa Group Buy</title>
 <link rel="stylesheet" href="https://threads.plaid.com/threads.css">
 
 <link rel="stylesheet" type="text/css" href="./static/style.css">
@@ -13,18 +13,15 @@
     <div class="grid">
       <div class="grid__column grid__column--is-twelve-columns">
         <div id="banner" class="everpresent-content">
-          <h1 class="everpresent-content__heading">Plaid Quickstart</h1>
-          <p id="intro" class="everpresent-content__subheading">
-            An example application that outlines an end-to-end integration with Plaid
-          </p>
+          <h1 class="everpresent-content__heading">Visa Group Buy</h1>
           <p id="steps" class="everpresent-content__subheading">
-           Success! You just created an Item by linking your account.
+           Success! Your account is linked!
           </p>
         </div>
 
         <div id="container" class="initial-view">
           <p class="initial-view__description">
-            Click the button below to open a list of Institutions. After you select one, you’ll be guided through an authentication process. Upon completion, a public_token will be passed back to the server and exchanged for access_token.
+            Click the button below to connect your bank account with Plaid.
           </p>
 
           <button id="link-btn" class="button button--is-primary" disabled>Connect with Plaid</button>
@@ -33,7 +30,7 @@
         </div>
 
         <div id="app" class="connected-view">
-          <div class="item-overview">
+          <!--<div class="item-overview">
             <div class="item-overview__column">
               <h3 class="item-overview__heading">item_id</h3>
               <p class="item-overview__id" id="item_id">san.asjsansakjsakjasjksajkas</p>
@@ -50,7 +47,6 @@
           <div class="box">
             <h3 class="box__heading">Products</h3>
 
-            <!-- Auth -->
             <div class="item-data-row">
               <div class="item-data-row__left">
                 <div class="item-data-row__request-type">post</div>
@@ -68,7 +64,6 @@
               </div>
             </div>
 
-            <!--Transactions -->
             <div class="item-data-row">
               <div class="item-data-row__left">
                 <div class="item-data-row__request-type">post</div>
@@ -86,7 +81,6 @@
               </div>
             </div>
 
-            <!-- Identity -->
             <div class="item-data-row">
               <div class="item-data-row__left">
                 <div class="item-data-row__request-type">post</div>
@@ -104,7 +98,6 @@
               </div>
             </div>
 
-            <!-- Balance -->
             <div class="item-data-row">
               <div class="item-data-row__left">
                 <div class="item-data-row__request-type">post</div>
@@ -122,7 +115,6 @@
               </div>
             </div>
 
-            <!-- Assets (hidden unless 'assets' is included in the product list) -->
             <div id='assets' class="item-data-row" style='display:none;'>
               <div class="item-data-row__left">
                 <div class="item-data-row__request-type">post</div>
@@ -144,7 +136,6 @@
               </div>
             </div>
 
-            <!-- Holdings -->
             <div class="item-data-row">
               <div class="item-data-row__left">
                 <div class="item-data-row__request-type">post</div>
@@ -162,7 +153,6 @@
               </div>
             </div>
 
-            <!-- Investment Transactions -->
             <div class="item-data-row">
               <div class="item-data-row__left">
                 <div class="item-data-row__request-type">post</div>
@@ -180,7 +170,6 @@
               </div>
             </div>
 
-            <!-- UK Payment Initiation (hidden unless 'payment_initiation' is included in the product list) -->
             <div class="payment_initiation item-data-row" style='display:none;'>
               <div class="item-data-row__left">
                 <div class="item-data-row__request-type">post</div>
@@ -200,12 +189,12 @@
               </div>
             </div>
 
-          </div>
+          </div>-->
 
           <div class="box">
-            <h3 class="box__heading">Item management</h3>
+            <h3 class="box__heading">Account Management</h3>
 
-            <div class="item-data-row">
+            <!--<div class="item-data-row">
               <div class="item-data-row__left">
                 <div class="item-data-row__request-type">post</div>
               </div>
@@ -221,10 +210,10 @@
               <div class="item-data-row__response">
                 <table><tbody id="get-item-data"></tbody></table>
               </div>
-            </div>
+            </div>-->
 
             <div class="item-data-row">
-              <div class="item-data-row__left">
+              <!--<div class="item-data-row__left">
                 <div class="item-data-row__request-type">post</div>
               </div>
               <div class="item-data-row__center">
@@ -234,7 +223,17 @@
 
               <div class="item-data-row__right">
                 <button id="get-accounts-btn" class="button button--is-small button--is-default button--is-full-width">Send request</button>
+              </div>-->
+              <div class="item-data-row__left">
+                <div class="item-data-row__request-type">Balances</div>
               </div>
+              <div class="item-data-row__center">
+                <div class="item-data-row__description">Get info about credit card balances.</div>
+              </div>
+              <div class="item-data-row__right">
+                <button id="get-accounts-btn" class="button button--is-small button--is-default button--is-full-width">Get Balance Info</button>
+              </div>
+              
 
               <div class="item-data-row__response">
                 <table><tbody id="get-accounts-data"></tbody></table>
@@ -354,13 +353,14 @@
             displayError(this, data.error);
             return;
           }
-          var html = '<tr><td><strong>Name</strong></td><td><strong>Balances</strong></td><td><strong>Subtype</strong></td><td><strong>Mask</strong></td></tr>';
+          var html = '<tr><td><strong>Name</strong></td><td><strong>Available Balance</strong></td><td><strong>Current Balance</strong></td><td><strong>Credit Limit</strong></td><td><strong>Card Number</strong></td></tr>';
           data.accounts.forEach(function(account, idx) {
             html += '<tr>';
             html += '<td>' + account.name + '</td>';
-            html += '<td>$' + (account.balances.available != null ? account.balances.available : account.balances.current) + '</td>';
-            html += '<td>' + account.subtype + '</td>';
-            html += '<td>' + account.mask + '</td>';
+            html += '<td>$' + (account.balances.available != null ? account.balances.available : (account.balances.limit - account.balances.current)) + '</td>';
+            html += '<td>$' + account.balances.current + '</td>';
+            html += '<td>$' + account.balances.limit + '</td>';
+            html += '<td> **** **** **** ' + account.mask + '</td>';
             html += '</tr>';
           });
 
